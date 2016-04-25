@@ -103,7 +103,7 @@ app.get("/leads", function (req, res) {
 
 app.get("/history", function (req, res) {
 
-  models.LeadRequest.find({}, function (err, leadReqs) {
+  models.LeadRequest.find({},{}, {limit: 15, sort: { $natural: -1 }}, function (err, leadReqs) {
     if (err) {
       res.render('history', { errorMessage: err, q: query, count: count, email: email });
       return;
@@ -113,10 +113,7 @@ app.get("/history", function (req, res) {
       return;
     }
     res.render('history', { leadRequests: leadReqs});
-  },
-    {
-      limit: 15, sort: { $natural: -1 }
-    }
+  }
   );
 
 });
