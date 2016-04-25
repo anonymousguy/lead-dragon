@@ -12,6 +12,9 @@
     "express"    : "latest",
     "request"    : "latest",
     "cheerio"    : "latest",
-    "ejs" : "latest"
+    "ejs" : "latest",
+    "nodemailer" : "latest",
+    "mongoose": "latest",
+    "limiter": "latest"
   }
 }

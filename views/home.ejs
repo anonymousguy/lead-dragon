@@ -65,14 +65,22 @@
               </div>
             </div>
             <p style="text-align: center;">Tip: Search for your keyword on google first.<br/>Search for 200 total leads per hour allowed, spammers will be blocked forever.</p>
-            <% if (typeof q != 'undefined' && q) { %>
+            <% if (typeof errorMessage != 'undefined' && errorMessage) { %>
+              <br/>
+              <p style="font-weight: bold;text-align: center; color: red;"> <%= errorMessage %></p> 
+            <% } else if (typeof q != 'undefined' && q) { %>
             <br/>
-          <p style="font-weight: bold;text-align: center; color: #1EAEDB;"> Lead generation for "<%= q %>" started.<br/>It takes some time, we will email you the data once done.</p> 
-        <% } %>
+              <p style="font-weight: bold;text-align: center; color: #1EAEDB;"> Lead generation for "<%= q %>" started.<br/>It takes some time, we will email you the data once done.</p> 
+            <% } %>
             <br/>
             <div style="text-align: center;">
               <input class="button" type="submit" value="Get Leads">
-              </div>
+            </div>
+            
+            <br/><br/>
+            <div style="text-align: center;">
+              <a href="/leads">Download Your Data</a>
+            </div>
           </form>
         </div>
 
