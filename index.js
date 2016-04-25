@@ -92,11 +92,32 @@ app.get("/leads", function (req, res) {
         res.render('leads', { errorMessage: "Leads not available yet. Come back again after some time.", q: query, count: count, email: email });
         return;
       }
-      console.log("showing "+leads.length+" leads");
-      res.render('leads', {leads: leads, q: query, count: count, email: email});
+      console.log("showing " + leads.length + " leads");
+      res.render('leads', { leads: leads, q: query, count: count, email: email });
     });
 
   })
+
+});
+
+
+app.get("/history", function (req, res) {
+
+  models.LeadRequest.find({}, function (err, leadReqs) {
+    if (err) {
+      res.render('history', { errorMessage: err, q: query, count: count, email: email });
+      return;
+    }
+    if (!leadReqs || leadReqs.length<0) {
+      res.render('history', { errorMessage: "No request yet"});
+      return;
+    }
+    res.render('history', { leadRequests: leadReqs});
+  },
+    {
+      limit: 15, sort: { $natural: -1 }
+    }
+  );
 
 });
 

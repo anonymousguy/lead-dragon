@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Simplest lead generator</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+
+  <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/custom.css">
+
+  <!-- Scripts
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+  <link rel="stylesheet" href="css/github-prettify-theme.css">
+  <script src="js/site.js"></script>
+  <script src="js/clipboard.min.js"></script>
+
+  <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+
+<body class="code-snippets-visible">
+
+  <!-- Primary Page Layout
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <section class="header">
+      <h2 class="title">Search History</h2>
+      <a href="/">Home</a> 
+    </section>
+
+    <!-- Forms -->
+    <div class="docs-section" id="forms">
+      <div class="docs-example docs-example-forms">
+
+        <% if (typeof leadRequests != 'undefined' && leadRequests && leadRequests.length>0 ) { %>
+          <p> Showing last <%= leadRequests.length %> lead requests
+          <div class="twelve columns">
+          <ul>
+            <% for(var i=0; i < leadRequests.length; i++) { %>
+              <li>
+                 
+                    <a href='/leads?q=<%= leadRequests[i].title %>&count=<%= leadRequests[i].totalCount %>'>
+                      <%= leadRequests[i].title %>
+                    </a>
+                
+              </li>
+             <% } %>
+          </ul>
+          </div>
+         <% } %>
+      </div>
+
+</body>
+
+</html>
