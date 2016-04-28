@@ -132,7 +132,7 @@
     
     function exportToFile(){
       var filename = "EmailData.txt";
-      var blob = new Blob([getAllEmails()], { type: 'text/plain;charset=utf-8;' });
+      var blob = new Blob([getAllEmails().join(",\n")], { type: 'text/plain;charset=utf-8;' });
         if (navigator.msSaveBlob) { // IE 10+
             navigator.msSaveBlob(blob, filename);
         } else {
@@ -151,7 +151,7 @@
     }
     
     function copyToClipboard() {
-      var text = getAllEmails();
+      var text = getAllEmails().join(",\n");
       window.prompt("Click OK", text);
     }
     
@@ -163,7 +163,7 @@
       <% } %>
       <% } %>
       console.log(" leads "+ emails.toString());
-      return emails.toString(); 
+      return emails; 
     }
 </script>
 
@@ -172,7 +172,7 @@
   (function() { 
     new Clipboard('.ctc', {
     text: function(trigger) {
-        return getAllEmails();
+        return getAllEmails().join(",\n");
     }
     });
     // Json2CSV(leads);
