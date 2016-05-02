@@ -1,6 +1,6 @@
 {
   "name"         : "lead-dragon",
-  "version"      : "0.0.1",
+  "version"      : "0.0.4",
   "description"  : "generate leads, scrapping",
   "main"         : "index.js",
   "author"       : "anonymousguy",

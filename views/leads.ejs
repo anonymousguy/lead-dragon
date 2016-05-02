@@ -95,7 +95,14 @@
           </div>
          <% } %>
       </div>
-
+      
+     <% if (typeof version != 'undefined' && version) { %>
+      <br/><br/>
+            <div style="text-align: center;color: #cccccc">
+              <%= version %>
+              &copy; Lead Dragon
+            </div>
+      <% } %>
 
 </body>
 
