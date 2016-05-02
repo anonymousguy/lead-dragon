@@ -15,6 +15,7 @@
     "ejs" : "latest",
     "nodemailer" : "latest",
     "mongoose": "latest",
-    "limiter": "latest"
+    "async": "latest",
+    "log4js": "latest"
   }
 }

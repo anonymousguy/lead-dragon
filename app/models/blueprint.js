@@ -10,7 +10,8 @@ var leadRequestSchema = mongoose.Schema({
     totalCount: Number,
     email: String,
     status: String, //[scheduled, finished, sent]
-    expectedCompletionTime: Date,
+    startDate: Date,
+    endDate: Date,
     sentLeadCount: {type: Number, default: 0} //To keep track of how many leads have been sent  
 });
 

@@ -1,3 +1,4 @@
+var fs = require('fs');
 var express = require('express');
 var mongoose = require('mongoose');
 var app = express();
@@ -6,6 +7,22 @@ var EmailService = require('./app/services/EmailService');
 var ScheduleService = require('./app/services/ScheduleService');
 var LeadService = require('./app/services/LeadService');
 var models = require('./app/models/blueprint');
+var log4js = require('log4js');
+
+//create  log file
+var logFilePath = "logs/leaddragon.log";
+var logDir = "./logs";
+if (!fs.existsSync(logDir)){
+    fs.mkdirSync(logDir);
+}
+var fd = fs.openSync(logFilePath, 'w');
+fs.closeSync(fs.openSync(logFilePath, 'w'));
+
+log4js.loadAppender('file');
+log4js.addAppender(log4js.appenders.file(logFilePath), 'leaddragon');
+var logger = log4js.getLogger('leaddragon');
+
+
 
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
@@ -14,16 +31,16 @@ app.set('view engine', 'ejs');
 // Connect to mongodb
 var connect = function () {
   var options = { server: { socketOptions: { keepAlive: 1 } } };
-  console.log(process.env.MONGODB_URI);
+  logger.info(process.env.MONGODB_URI);
   mongoose.connect(process.env.MONGODB_URI, options); //process.env.MONGODB_URI = mongodb://example:example@ds053312.mongolab.com:53312/leaddragon 
 };
 connect();
 
-mongoose.connection.on('error', console.log);
+mongoose.connection.on('error', logger.info);
 mongoose.connection.on('disconnected', connect);
 mongoose.connection.once('open', function () {
   // we're connected!
-  console.log("Mongodb connected successfully!");
+  logger.info("Mongodb connected successfully!");
 });
 
 
@@ -40,17 +57,17 @@ app.get('/', function (req, res) {
   // query = "media agencies gurgaon contact";
 
   // var fullUrl = req.protocol + '://' + req.get('host') + "/";
-  console.log("Generating leads for " + query);
+  logger.info("Generating leads for " + query);
 
   //Log: Save request in db first
-  var LeadRequestModel = new models.LeadRequest({ title: query, totalCount: count, email: email });
+  var LeadRequestModel = new models.LeadRequest({ title: query, totalCount: count, email: email, startDate: new Date() });
   LeadRequestModel.save(function (err, result) {
     if (err) {
       console.error(err);
       res.render('home', { errorMessage: err, q: query, count: count, email: email });
       return;
     }
-    console.log("saved lead request at " + result.id);
+    logger.info("saved lead request at " + result.id);
     //Manage lead extraction process combining existing database and scrapping for new data
     LeadService.generateLeads(result, function (err, result1) {
       if (err) {
@@ -92,7 +109,7 @@ app.get("/leads", function (req, res) {
         res.render('leads', { errorMessage: "Leads not available yet. Come back again after some time.", q: query, count: count, email: email });
         return;
       }
-      console.log("showing " + leads.length + " leads");
+      logger.info("showing " + leads.length + " leads");
       res.render('leads', { leads: leads, q: query, count: count, email: email });
     });
 
@@ -120,5 +137,5 @@ app.get("/history", function (req, res) {
 
 var port = process.env.PORT || 3000;
 app.listen(port);
-console.log('Magic happens on port ' + port);
+logger.info('Magic happens on port ' + port);
 exports = module.exports = app;
